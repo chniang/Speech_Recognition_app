@@ -25,49 +25,49 @@ download_nltk_data()
 # Configuration de la page
 st.set_page_config(
     page_title="Analyse de Discours IA",
-    page_icon="ðŸŽ¤",
+    page_icon="🎤",
     layout="centered",
     initial_sidebar_state="collapsed"
 )
 
-# En-tÃªte
-st.title("ðŸŽ¤ Analyse de Discours IA")
-st.markdown("**Analysez votre discours et obtenez un feedback automatisÃ© basÃ© sur l'IA**")
-st.info("ðŸ’¡ Cette application utilise le NLP pour analyser la qualitÃ© de votre prise de parole.")
+# En-tête
+st.title("🎤 Analyse de Discours IA")
+st.markdown("**Analysez votre discours et obtenez un feedback automatisé basé sur l'IA**")
+st.info("💡 Cette application utilise le NLP pour analyser la qualité de votre prise de parole.")
 
 # Sidebar
 with st.sidebar:
-    st.header("Ã€ propos")
+    st.header("À propos")
     st.markdown("""
-    ### Ce systÃ¨me analyse :
+    ### Ce système analyse :
     
-    - âœ… **Sentiment** du discours
-    - âœ… **ClartÃ©** du message
-    - âœ… **Structure** et transitions
-    - âœ… **Mots de remplissage**
+    - ✅ **Sentiment** du discours
+    - ✅ **Clarté** du message
+    - ✅ **Structure** et transitions
+    - ✅ **Mots de remplissage**
     
     ---
     
-    **DÃ©veloppÃ© par :** Cheikh Niang  
+    **Développé par :** Cheikh Niang  
     **Projet :** NLP Speech Analysis
     """)
     
     st.subheader("Exemple de texte")
     st.code("""
-Bonjour Ã  tous. Aujourd'hui, je vais vous 
+Bonjour à tous. Aujourd'hui, je vais vous 
 parler de l'intelligence artificielle. 
-PremiÃ¨rement, l'IA transforme notre sociÃ©tÃ©. 
+Premièrement, l'IA transforme notre société. 
 Ensuite, nous verrons ses applications. 
 Enfin, je partagerai mes recommandations.
     """, language="text")
 
 # Zone de saisie
-st.subheader("ðŸ“ Votre discours")
+st.subheader("📝 Votre discours")
 
 text_input = st.text_area(
     label="Entrez ou collez votre discours ici",
     height=200,
-    placeholder="Exemple : Bonjour Ã  tous. Aujourd'hui, je vais vous parler de...",
+    placeholder="Exemple : Bonjour à tous. Aujourd'hui, je vais vous parler de...",
     help="Tapez ou collez le texte de votre discours pour l'analyser",
     label_visibility="collapsed"
 )
@@ -75,17 +75,17 @@ text_input = st.text_area(
 # Compteur de mots
 if text_input:
     word_count = len(word_tokenize(text_input, language='french'))
-    st.caption(f"ðŸ“Š {word_count} mots")
+    st.caption(f"📊 {word_count} mots")
 
 # Bouton d'analyse
-analyze_button = st.button("ðŸ” Analyser mon discours", type="primary", use_container_width=True)
+analyze_button = st.button("🔍 Analyser mon discours", type="primary", use_container_width=True)
 
 # Traitement
 if analyze_button:
     if not text_input.strip():
-        st.error("âš ï¸ Veuillez entrer un texte Ã  analyser")
+        st.error("⚠️ Veuillez entrer un texte à analyser")
     elif len(text_input.split()) < 10:
-        st.warning("âš ï¸ Le texte est trop court (minimum 10 mots)")
+        st.warning("⚠️ Le texte est trop court (minimum 10 mots)")
     else:
         with st.spinner("Analyse en cours..."):
             analyzer = SpeechAnalyzer()
@@ -93,11 +93,11 @@ if analyze_button:
             results = analyzer.analyze(text_input)
             feedback = feedback_gen.generate(results)
         
-        st.success("âœ… Analyse terminÃ©e !")
+        st.success("✅ Analyse terminée !")
         st.divider()
         
         # Score global
-        st.subheader("ðŸ“Š Score Global")
+        st.subheader("📊 Score Global")
         col1, col2, col3 = st.columns([1, 2, 1])
         
         with col2:
@@ -107,52 +107,52 @@ if analyze_button:
             elif score >= 5:
                 delta_text = "Bien"
             else:
-                delta_text = "Ã€ amÃ©liorer"
+                delta_text = "À améliorer"
             
             st.metric(label="Score", value=f"{score}/10", delta=delta_text)
         
         st.divider()
         
-        # Feedback structurÃ©
+        # Feedback structuré
         col_left, col_right = st.columns([1, 1])
         
         with col_left:
-            st.subheader("âœ… Points Forts")
+            st.subheader("✅ Points Forts")
             if feedback['points_forts']:
                 for point in feedback['points_forts']:
                     st.success(point)
             else:
-                st.info("Aucun point fort identifiÃ© pour le moment")
+                st.info("Aucun point fort identifié pour le moment")
         
         with col_right:
-            st.subheader("âš ï¸ Points Ã  AmÃ©liorer")
+            st.subheader("⚠️ Points à Améliorer")
             if feedback['points_amelioration']:
                 for point in feedback['points_amelioration']:
                     st.warning(point)
             else:
-                st.success("Rien Ã  amÃ©liorer, excellent travail !")
+                st.success("Rien à améliorer, excellent travail !")
         
         # Recommandations
         if feedback['recommandations']:
             st.divider()
-            st.subheader("ðŸ’¡ Recommandations")
+            st.subheader("💡 Recommandations")
             for i, reco in enumerate(feedback['recommandations'], 1):
                 st.info(f"**{i}.** {reco}")
         
-        # DÃ©tails techniques
+        # Détails techniques
         st.divider()
-        with st.expander("ðŸ“ˆ DÃ©tails de l'analyse (avancÃ©)"):
+        with st.expander("📈 Détails de l'analyse (avancé)"):
             st.markdown("### Statistiques")
             st.json(results['stats'])
             st.markdown("### Sentiment")
             st.json(results['sentiment'])
             st.markdown("### Mots de remplissage")
             st.json(results['fillers'])
-            st.markdown("### ClartÃ©")
+            st.markdown("### Clarté")
             st.json(results['clarity'])
             st.markdown("### Structure")
             st.json(results['structure'])
 
 # Pied de page
 st.divider()
-st.caption("ðŸ“Œ DÃ©veloppÃ© par **Cheikh Niang** | Projet NLP Speech Analysis | PropulsÃ© par Python & Streamlit")
+st.caption("📌 Développé par **Cheikh Niang** | Projet NLP Speech Analysis | Propulsé par Python & Streamlit")
