@@ -4,7 +4,7 @@ Système d'analyse NLP pour discours et prises de parole, avec génération auto
 
 ## 🌐 Démo en ligne
 
-**Application déployée** : [À venir sur Streamlit Cloud]
+**Application déployée** : https://speechrecognitionapp-notgexojl2z4metcq9t6ud.streamlit.app/
 
 ## ✨ Fonctionnalités
 
